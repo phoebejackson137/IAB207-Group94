@@ -1,8 +1,14 @@
-from . import db
+"""
+Data structures given in the assessment folder
+"""
 from datetime import datetime
 from flask_login import UserMixin
+from . import db
 
 class User(db.Model, UserMixin):
+    """
+    Basic user class
+    """
     __tablename__ = 'users' # good practice to specify table name
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
@@ -18,6 +24,9 @@ class User(db.Model, UserMixin):
         return f"Name: {self.name}"
 
 class Destination(db.Model):
+    """
+    Basic destination class
+    """
     __tablename__ = 'destinations'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
@@ -33,6 +42,9 @@ class Destination(db.Model):
         return f"Name: {self.name}"
 
 class Comment(db.Model):
+    """
+    Basic comments class
+    """
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(400))
