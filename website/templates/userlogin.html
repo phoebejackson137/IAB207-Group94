@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniMusic</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="static/style/styles.css">
+
+</head>
+
+<body>
+    
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+            <a class="navbar-brand" href="index.html">
+                <img src="static/img/MiniMusic_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="MiniMusic Logo">MiniMusic</a>
+
+        <!-- Search Bar -->
+        <form class="form-inline mr-auto">
+            <input class="form-control" type="search" placeholder="Search events..." aria-label="Search">
+        </form>
+
+                <div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a href="find_events.html" class="nav-link">Find Events</a> </li>
+                        <li class="nav-item"><a href="event_history.html" class="nav-link">Past Events</a> </li>
+                        <li class="nav-item"><a href="edit_events.html" class="nav-link">Edit/Create Events</a> </li>
+                        <li class="nav-item"><a href="userlogin.html" class="nav-link">Login</a> </li>
+                        <li class="nav-item"><a href="userrego.html" class="nav-link">Sign Up</a> </li>
+                    </ul>
+                </div>
+        </nav>
+    <main>
+        <div class="container mt-5">
+            <!-- Login Form -->
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginUsername">Username:</label>
+                            <input type="text" class="form-control" id="loginUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password:</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Login</button>
+                    </form>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- User's Events -->
+            <div id="userEvents" style="display:none;">
+                <h2>Your Events</h2>
+                <!-- Events will be populated here -->
+            </div>
+        </div>
+
+    </main>
+        <!-- Footer -->
+        <footer class="footer mt-auto py-3">
+            <div class="container">
+                <span class="text-muted">MiniMusic &copy; 2023</span>
+            </div>
+        </footer>
+
+    <script>
+        // Here you'd add front-end validation and logic for form submission.
+        // On a successful login, for example, you might display the #userEvents div.
+    </script>
+
+</body>
+
+</html>
