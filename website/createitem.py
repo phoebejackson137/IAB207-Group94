@@ -41,6 +41,33 @@ def view_events():
     events = Event.query.all()
     return render_template('view_events.html', events=events)
 
+@app.route('/update_event/<int:event_id>', methods=['POST'])
+def update_event(event_id):
+    name = request.form.get('name')
+    description = request.form.get('description')
+    date = request.form.get('date')
+    owner = request.form.get('owner')
+
+    if not name or not description or not date or not owner:
+        return render_template('create_event.html', events=events, error='All fields are required.')
+    
+# Update event details.
+    event = events[event_id]
+    event['name'] = name
+    event['description'] = description
+    event['date'] = date
+    event['owner'] = owner
+
+    return redirect('/')
+
+@app.route('/cancel_event/<int:event_id>')
+def cancel_event(event_id):
+    # Cancel the event if the owner matches.
+    event = events[event_id]
+    if event['owner'] == request.args.get('owner'):
+        event['status'] = 'Cancelled'
+
+    return redirect('/')
+
 if __name__ == '__main__':
-    db.create_all()
     app.run(debug=True)
