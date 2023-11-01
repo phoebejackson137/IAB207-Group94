@@ -8,7 +8,7 @@ from wtforms.fields import (
 from wtforms.validators import InputRequired, Email, EqualTo
 
 class TelephoneForm(FlaskForm):
-    """Directly from the Flask wtf forms documentation - recommended to store phone numbers"""
+    """Directly from the Flask WTForms documentation - recommended to store phone numbers"""
     country_code = IntegerField('Country Code', validators=[InputRequired()])
     area_code    = IntegerField('Area Code/Exchange', validators=[InputRequired()])
     number       = StringField('Number')

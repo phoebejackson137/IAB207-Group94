@@ -6,7 +6,11 @@
 <!-------- START: Pill-shaped search bar -------->
 <div class="p-4 rounded-pill text-center bg-white m-0">
   <div class="row mx-2">
-    {{wtf.render_form(form)}}
+    <form class="form-inline d-flex flex-nowrap" action="{{url_for('main.search')}}" >
+      <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
+      <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
+      <button type="submit" class="flex-shrink-1 btn btn-primary my-1">Submit</button>
+    </form>
   </div>
 </div>
 <!-------- END: Pill-shaped search bar -------->
