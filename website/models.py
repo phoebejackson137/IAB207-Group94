@@ -6,6 +6,7 @@ from datetime import datetime
 from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
+    """User data table"""
     __tablename__='users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
@@ -19,13 +20,15 @@ class User(db.Model, UserMixin):
         return "<Name: {}, id: {}>".format(self.name, self.id)
 
 class Event(db.Model):
+    """Event table"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), index=True, unique=False, nullable=False)
     location = db.Column(db.String(250), nullable=False)
 
 class Comment(db.Model):
+    """Comment Table"""
     id = db.Column(db.Integer, primary_key=True)
-   
 
 class Order(db.Model):
+    """Order Table"""
     id = db.Column(db.Integer, primary_key=True)

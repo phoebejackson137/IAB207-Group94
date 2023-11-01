@@ -51,3 +51,8 @@ class CommentForm(FlaskForm):
     """ User comments on events """
     text = TextAreaField('Comment', [InputRequired()])
     submit = SubmitField('Create')
+
+class SearchEventsForm(FlaskForm):
+    """ Search field """
+    search_phrase = StringField('enter keywords', validators=[InputRequired()])
+    location = StringField('enter location', validators=[InputRequired()])

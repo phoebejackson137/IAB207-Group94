@@ -1,43 +1,12 @@
 <!doctype html>
 {% extends 'base.html' %}
+{% import "bootstrap/form.html" as wtf %}
 
 {% block content %}
 <!-------- START: Pill-shaped search bar -------->
 <div class="p-4 rounded-pill text-center bg-white m-0">
   <div class="row mx-2">
-    <div class="col-2 align-self-center">
-      <span class="h5"> Take me to </span>
-    </div>
-    <div class="col-3 align-self-center">
-      <div class="input-group">
-        <input class="form-control px-3" placeholder="enter keyword">
-        <span class="input-group-append">
-            <span class="input-group-text bg-grey">
-                <i class="bi bi-pencil-fill px-1"></i>
-            </span>
-        </span>
-      </div>
-    </div>
-    <div class="col-2 align-self-center">
-      <span class="h5"> events in </span>
-    </div>
-    <div class="col-3 align-self-center">
-      <div class="input-group">
-        <input class="form-control px-3" placeholder="enter location">
-        <span class="input-group-append bg-grey-rounded">
-            <span class="input-group-text bg-grey">
-                <i class="bi bi-geo-alt-fill px-1"></i>
-            </span>
-        </span>
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-cherry btn-sm rounded-pill py-0">
-          <i class="bi bi-arrow-right"></i>
-        </button>
-      </div>
-    </div>
+    {{wtf.render_form(form)}}
   </div>
 </div>
 <!-------- END: Pill-shaped search bar -------->
