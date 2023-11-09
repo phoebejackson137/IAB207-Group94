@@ -4,17 +4,7 @@ MAIN
 from website import db, create_app
 from datetime import datetime
 from website.models import User, Event, Order
-from flask_login import LoginManager
 
-# login stuff
-login_manager = LoginManager()
-login_manager.main(app)
-login_manager.login_view = 'login'  # The name of the login view
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-# login stuff
 
 if __name__ == '__main__':
     app = create_app()
