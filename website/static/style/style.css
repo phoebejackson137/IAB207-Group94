@@ -194,10 +194,7 @@ span.bg-grey{
   .basic-addon1 {
     border-color: white;
   }
-  .rounded-pill {
-    border-radius: 50px;
-    vertical-align: top;
-  }
+ 
   .rounded-pill-bottom {
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
@@ -207,6 +204,9 @@ span.bg-grey{
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
     vertical-align: middle;
+  }
+  .rounded-pill-both {
+    border-radius: 50px;
   }
 
   .card-img-top {

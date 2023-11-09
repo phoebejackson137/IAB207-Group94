@@ -12,7 +12,15 @@ main_bp = Blueprint('main', __name__)
 def index():
     """Landing Page"""
     form=SearchEventsForm()
-    return render_template('index.html',form=form)
+    events= Event.query.all()
+    return render_template('index.html',form=form, events=events)
+
+@main_bp.route('/event-detail-view')
+def view_event():
+    """Event Detail View"""
+    event_id = request.args.get('target_event')
+    event = db.session.scalar(db.select(Event).where(Event.id==event_id))
+    return render_template('event-detail-view.html', event=event)
 
 @main_bp.route('/create-event')
 def create_event():
@@ -28,3 +36,10 @@ def search():
         return render_template('index.html', destinations=destinations)
     else:
         return redirect(url_for('main.index'))
+    
+eventbp = Blueprint('event', __name__, url_prefix='/event')
+
+@eventbp.route('/<id>')
+def show(id):
+    event = db.session.scalar(db.select(Event).where(Event.id==id))
+    return render_template('event-detail-view.html', event=event)
