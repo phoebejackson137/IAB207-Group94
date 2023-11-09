@@ -8,38 +8,43 @@ from . import db
 # Create a blueprint - make sure all BPs have unique names
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/register', methods=['GET', 'POST'])
+@auth_bp.route('/userrego', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        
-        existing_user = User.query.filter_by(username=username).first()
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        # Check if the username or email already exists
+        existing_user = User.query.filter((User.username == form.username.data) | 
+                                          (User.emailid == form.email.data)).first()
         if existing_user is None:
-            new_user = User(username=username)
-            new_user.set_password(password)
+            new_user = User(name=form.name.data,
+                            emailid=form.email.data,
+                            username=form.username.data)
+            new_user.set_password(form.password.data)
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for('userlogin.html'))
+            flash('You have successfully registered!', 'success')
+            return redirect(url_for('login'))  # Redirect to the login page after registration
         else:
-            flash('Username already exists.')
+            flash('Username or email already exists.', 'error')
 
-    return render_template('userrego.html')
+    return render_template('userrego.html', form=form)
 
-@auth_bp.route('/login', methods=['GET', 'POST'])
+@auth_bp.route('/userlogin', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))  # Redirect to home if already logged in
 
-        user = User.query.filter_by(username=username).first()
-        if user and user.check_password(password):
-            login_user(user)
-            return redirect(url_for('dashboard'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            flash('Logged in successfully!', 'success')
+            next_page = request.args.get('next')
+            return redirect(next_page or url_for('index'))  # Redirect to next or home page
         else:
-            flash('Invalid username or password.')
-
-    return render_template('userlogin.html')
+            flash('Invalid username or password.', 'error')
+    return render_template('userlogin.html', form=form)
 
 @auth_bp.route('/dashboard')
 @login_required
