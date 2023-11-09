@@ -29,7 +29,7 @@ class OrderForm(FlaskForm):
     num_tickets = IntegerField('Number of tickets', validators=[InputRequired()])
     price_per_ticket = DecimalField('Price per ticket')
 
-class RegistrationForm(FlaskForm):
+class RegisterForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired()])
     email = StringField('Email', validators=[InputRequired(), Email()])
     username = StringField('Username', validators=[InputRequired()])
