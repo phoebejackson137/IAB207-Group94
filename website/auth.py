@@ -8,7 +8,7 @@ from . import db
 # Create a blueprint - make sure all BPs have unique names
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/userrego', methods=['GET', 'POST'])
+@auth_bp.route('/forms', methods=['GET', 'POST'])
 def register():  
   #create the form
     form = RegisterForm()
@@ -32,7 +32,7 @@ def register():
        
     return render_template('forms.html', form=form, heading='Register')
 
-@auth_bp.route('/userlogin', methods=['GET', 'POST'])
+@auth_bp.route('/forms', methods=['GET', 'POST'])
 def login():
   form = LoginForm()
   error=None
