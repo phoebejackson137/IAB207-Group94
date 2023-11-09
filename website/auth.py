@@ -9,50 +9,60 @@ from . import db
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/userrego', methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
+def register():  
+  #create the form
+    form = RegisterForm()
+    #this line is called when the form - POST
     if form.validate_on_submit():
-        # Check if the username or email already exists
-        existing_user = User.query.filter((User.username == form.username.data) | 
-                                          (User.emailid == form.email.data)).first()
-        if existing_user is None:
-            new_user = User(name=form.name.data,
-                            emailid=form.email.data,
-                            username=form.username.data)
-            new_user.set_password(form.password.data)
-            db.session.add(new_user)
-            db.session.commit()
-            flash('You have successfully registered!', 'success')
-            return redirect(url_for('login'))  # Redirect to the login page after registration
-        else:
-            flash('Username or email already exists.', 'error')
-
-    return render_template('userrego.html', form=form)
+      print('Register form submitted')
+       
+      #get username, password and email from the form
+      uname =form.username.data
+      pwd = form.password.data
+      email=form.email.data
+      utype =form.usertype.data
+      
+      pwd_hash = generate_password_hash(pwd)
+      #create a new user model object
+      new_user = User(name=uname, password_hash=pwd_hash, emailid=email, usertype=utype)
+      db.session.add(new_user)
+      db.session.commit()
+      flash("Registered user successfully")
+      return redirect(url_for('auth.register'))
+       
+    return render_template('forms.html', form=form, heading='Register')
 
 @auth_bp.route('/userlogin', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))  # Redirect to home if already logged in
-
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user and user.check_password(form.password.data):
-            login_user(user, remember=form.remember_me.data)
-            flash('Logged in successfully!', 'success')
-            next_page = request.args.get('next')
-            return redirect(next_page or url_for('index'))  # Redirect to next or home page
-        else:
-            flash('Invalid username or password.', 'error')
-    return render_template('userlogin.html', form=form)
+  form = LoginForm()
+  error=None
+  if(form.validate_on_submit()):
+    user_name = form.username.data
+    password = form.password.data
+    u1 = User.query.filter_by(name=user_name).first()
+    
+        #if there is no user with that name
+    if u1 is None:
+      error='Incorrect user name'
+    #check the password - notice password hash function
+    elif not check_password_hash(u1.password_hash, password): # takes the hash and password
+      error='Incorrect password'
+    if error is None:
+    #all good, set the login_user
+      login_user(u1)
+      return redirect(url_for('main.index'))
+    else:
+      print(error)
+      flash(error)
+    #it comes here when it is a get method
+  return render_template('forms.html', form=form, heading='Login')
 
 @auth_bp.route('/dashboard')
 @login_required
 def dashboard():
     return 'Welcome to your Dashboard!'
 
-@auth_bp.route('/logout')
-@login_required
+@bp.route('/logout')
 def logout():
-    logout_user()
-    return redirect(url_for('userlogin.html'))
+  logout_user()
+  return 'Successfully logged out user'

@@ -29,18 +29,23 @@ class OrderForm(FlaskForm):
     num_tickets = IntegerField('Number of tickets', validators=[InputRequired()])
     price_per_ticket = DecimalField('Price per ticket')
 
-class RegisterForm(FlaskForm):
-    name = StringField('Name', validators=[InputRequired()])
-    email = StringField('Email', validators=[InputRequired(), Email()])
-    username = StringField('Username', validators=[InputRequired()])
-    password = PasswordField('Password', validators=[InputRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[InputRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
-
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired()])
+  username = StringField('User Name', validators=[InputRequired()])
+  password = PasswordField('Password', validators=[InputRequired()])
+  submit = SubmitField('Login')
+
+
+class RegisterForm(FlaskForm):
+    username = StringField('User Name', validators=[InputRequired()])
+    email = StringField('Email ID', validators=[InputRequired(),Email() ])
+    #password field
     password = PasswordField('Password', validators=[InputRequired()])
-    submit = SubmitField('Login')
+  #validator to check if the user entry is equal to password
+    confirm = PasswordField('Confirm Password', 
+          validators=[EqualTo('password', message='Re-enter same as Password')])
+
+    usertype = SelectField('User Type', choices=[('guest', 'Guest'),('admin', 'Administrator')])
+    submit = SubmitField('Register')
 
 
 class CommentForm(FlaskForm):

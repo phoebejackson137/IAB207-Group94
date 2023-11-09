@@ -44,15 +44,3 @@ def show(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
     return render_template('event-detail-view.html', event=event)
 
-
-@main_bp.route('/userlogin')
-def userlogin():
-    """User Login Page"""
-    
-    return render_template('userlogin.html')
-
-@main_bp.route('/userrego')
-def userrego():
-    """User Registration Page"""
-    
-    return render_template('userrego.html')
