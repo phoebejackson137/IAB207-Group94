@@ -17,7 +17,7 @@ class TelephoneForm(FlaskForm):
 
 class EventForm(FlaskForm):
     """Create new event"""
-    title = StringField('Country', validators=[InputRequired()])
+    title = StringField('Title', validators=[InputRequired()])
     tag1 = SelectField('Tag', choices=['social', 'public talk', 'workshop', 'trivia', 'competition'])
     description = TextAreaField('Description', validators = [InputRequired()])
     location = StringField('Location')
