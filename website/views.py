@@ -1,9 +1,9 @@
 """
 Determines what content is in the viewport
 """
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .forms import SearchEventsForm, OrderForm
-from .models import Event, Order
+from .models import Event, Order,Comment
 from . import db
 from flask_login import login_required, current_user
 from datetime import datetime
@@ -23,6 +23,7 @@ def view_event():
     form = OrderForm()
     event_id = request.args.get('target_event')
     event = db.session.scalar(db.select(Event).where(Event.id==event_id))
+    comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.timestamp.desc()).all()
 
     if request.method == 'POST' and form.validate():
         user_id = 1
@@ -35,7 +36,7 @@ def view_event():
         for error in form.errors:
             print("error: "+error)
         flash('SYSTEM ERROR: Try again later')
-    return render_template('event-detail-view.html', event=event, form=form)
+    return render_template('event-detail-view.html', event=event, form=form,comments=comments)
 
 @main_bp.route('/create-event')
 def create_event():
