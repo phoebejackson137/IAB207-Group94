@@ -7,7 +7,6 @@ from wtforms.fields import (
     SubmitField, StringField, PasswordField, DateTimeField, FileField)
 from wtforms.validators import InputRequired, Email, EqualTo
 
-
 class TelephoneForm(FlaskForm):
     """Directly from the Flask WTForms documentation - recommended to store phone numbers"""
     country_code = IntegerField('Country Code', validators=[InputRequired()])
@@ -27,13 +26,12 @@ class EventForm(FlaskForm):
 class OrderForm(FlaskForm):
     """Order tickets to an event"""
     num_tickets = IntegerField('Number of tickets', validators=[InputRequired()])
-    price_per_ticket = DecimalField('Price per ticket')
+    #submit = SubmitField("Submit")
 
 class LoginForm(FlaskForm):
   username = StringField('User Name', validators=[InputRequired()])
   password = PasswordField('Password', validators=[InputRequired()])
   submit = SubmitField('Login')
-
 
 class RegisterForm(FlaskForm):
     username = StringField('User Name', validators=[InputRequired()])
@@ -46,7 +44,6 @@ class RegisterForm(FlaskForm):
 
     usertype = SelectField('User Type', choices=[('guest', 'Guest'),('admin', 'Administrator')])
     submit = SubmitField('Register')
-
 
 class CommentForm(FlaskForm):
     """ User comments on events """
