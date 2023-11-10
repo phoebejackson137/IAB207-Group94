@@ -49,6 +49,7 @@ class Event(db.Model):
     __tablename__='events'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), index=True, unique=False, nullable=False)
+    tag1 = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(250), index=True, unique=False, nullable=False)
     location = db.Column(db.String(250), nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
@@ -58,12 +59,15 @@ class Event(db.Model):
     price_per_ticket = db.Column(db.Double, nullable=False, default=0.00)
     status = db.Column(db.String(250), nullable=False,default='Open')
     long_description = db.Column(db.String(1000),nullable=False)
+    tag2 = db.Column(db.String(250), nullable=True)
+    tag3 = db.Column(db.String(250), nullable=True)
 
     orders = db.relationship('Order', backref='event')
 
-    def __init__(self,title,description,location,start_time, cover_img_path, total_num_tickets,
+    def __init__(self,title,tag1,description,location,start_time, cover_img_path, total_num_tickets,
                  price_per_ticket=0.00, num_tickets_sold=0, status='Open',long_description=""):
         self.title = title
+        self.tag1 = tag1
         self.description = description
         self.location = location
         self.start_time = start_time
@@ -99,7 +103,6 @@ class Order(db.Model):
 class Comment(db.Model):
     """Comment Table"""
     __tablename__='comments'
-    __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))  
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))  

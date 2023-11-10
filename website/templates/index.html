@@ -22,24 +22,65 @@
 <div class="row p-0 mx-0">
   <div class="col m-0 p-0">
     <ul class="nav nav-tabs nav-fill">
+      {% if active == "All" %}
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">All upcoming</a>
+        <a class="nav-link active" aria-current="page" href="{{url_for('main.index', active_tab='All')}}">All upcoming</a>
       </li>
+      {% else %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Public Talks</a>
+        <a class="nav-link" href="{{url_for('main.index', active_tab='All')}}">All upcoming</a>
       </li>
+      {% endif %}
+
+      {% if active == "public talk" %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Workshops</a>
+        <a class="nav-link active" aria-current="page" href="{{url_for('main.index', active_tab='public talk')}}">Public Talks</a>
       </li>
+      {% else %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Trivia</a>
+        <a class="nav-link" href="{{url_for('main.index', active_tab='public talk')}}">Public Talks</a>
       </li>
+      {% endif %}
+
+      {% if active == "workshop" %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Competitions</a>
+        <a class="nav-link active" aria-current="page" href="{{url_for('main.index', active_tab='workshop')}}">Workshops</a>
       </li>
+      {% else %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Social</a>
+        <a class="nav-link" href="{{url_for('main.index', active_tab='workshop')}}">Workshops</a>
       </li>
+      {% endif %}
+
+      {% if active == "trivia" %}
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{url_for('main.index', active_tab='trivia')}}">Trivia</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('main.index', active_tab='trivia')}}">Trivia</a>
+      </li>
+      {% endif %}
+
+      {% if active == "competition" %}
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{url_for('main.index', active_tab='competition')}}">Competitions</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('main.index', active_tab='competition')}}">Competitions</a>
+      </li>
+      {% endif %}
+
+      {% if active == "social" %}
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{url_for('main.index', active_tab='social')}}">Social</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('main.index', active_tab='social')}}">Social</a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 </div>

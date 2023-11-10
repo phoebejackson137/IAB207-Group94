@@ -10,12 +10,20 @@ from datetime import datetime
 
 main_bp = Blueprint('main', __name__)
 
-@main_bp.route('/')
-def index():
+@main_bp.route('/', defaults={'active_tab': 'All'})
+@main_bp.route('/<active_tab>')
+def index(active_tab):
     """Landing Page"""
     form=SearchEventsForm()
-    events= Event.query.all()
-    return render_template('index.html',form=form, events=events)
+    active = active_tab
+    events= [] 
+    if active == "All": 
+        events = Event.query.all()
+    else:
+        for event in db.session.query(Event).filter_by(tag1=active):
+            events.append(event)
+    return render_template('index.html',form=form, events=events, active=active)
+
 
 @main_bp.route('/event-detail-view', methods=['GET', 'POST'])
 def view_event():
