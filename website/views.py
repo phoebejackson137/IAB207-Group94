@@ -7,6 +7,9 @@ from .models import Event, Order,Comment
 from . import db
 from flask_login import login_required, current_user
 from datetime import datetime
+#for file upload
+from werkzeug.utils import secure_filename
+import os
 
 main_bp = Blueprint('main', __name__)
 
@@ -75,3 +78,13 @@ def show(id):
     return render_template('event-detail-view.html', event=event)
 
 
+def check_file(form):
+  img_file = form.image.data
+  #getting the file data from form
+  filename = img_file.filename
+  # get the current path of the module file… store file relative to this path
+  BASE_PATH = os.path.dirname(__file__)
+  #upload file location – directory of this file/static/img
+  upload_path = os.path.join(BASE_PATH, 'static/img', secure_filename(filename))
+  # save the file and return the db upload path
+  img_file.save(upload_path)

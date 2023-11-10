@@ -6,6 +6,8 @@ from wtforms.fields import (
     FormField, SelectField, IntegerField, DecimalField,TextAreaField,
     SubmitField, StringField, PasswordField, DateTimeField, FileField)
 from wtforms.validators import InputRequired, Email, EqualTo, NumberRange
+from flask_wtf.file import FileRequired, FileField, FileAllowed
+from website.user_forms import ALLOWED_FILE
 
 class TelephoneForm(FlaskForm):
     """Directly from the Flask WTForms documentation - recommended to store phone numbers"""
@@ -17,7 +19,9 @@ class EventForm(FlaskForm):
     """Create new event"""
     name = StringField('Country', validators=[InputRequired()])
     description = TextAreaField('Description', validators = [InputRequired()])
-    image = FileField('Cover Image', validators=[InputRequired()])
+      #create a filefield that takes two validators - File required and File Allowed
+    image = FileField('Event Image', validators=[FileRequired(message='Image can not be empty'),
+                                         FileAllowed(ALLOWED_FILE, message='Only support png, jpg, JPG, PNG, bmp')])
     start_time = DateTimeField('Start time', validators=[InputRequired()])
     end_time = DateTimeField('End time', validators=[InputRequired()])
     event_status = SelectField('Status', choices=['Open', 'Inactive', 'Sold Out', 'Cancelled'])
