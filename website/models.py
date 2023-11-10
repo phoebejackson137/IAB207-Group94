@@ -46,8 +46,6 @@ class Event(db.Model):
         self.start_time = start_time
         self.cover_image_path = cover_img_path
 
-    
-
 class Order(db.Model):
     __tablename__='orders'
     confirmation_num = db.Column(db.Integer, unique=True, primary_key = True)
