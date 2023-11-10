@@ -12,7 +12,7 @@ if __name__ == '__main__':
     ctx.push()
     db.drop_all()
     db.create_all()
-    u1=User("Phoebe","blach@gmail.com","password")
+    u1=User("Phoebe","blach@gmail.com","password","Guest")
     e1=Event("QUT Astronomy Club - Monthly Stargazing Night (December)",
              "Join us for an unforgettable evening of celestial wonder at the QUT Astronomy Club's monthly Stargazing Night, taking place this December. Immerse yourself in the magic of the night sky as we explore the cosmos from the heart of the city.", 
              "QUT Gardens Point Campus, Brisbane CBD",

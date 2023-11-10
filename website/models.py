@@ -15,10 +15,11 @@ class User(db.Model, UserMixin):
     
     usertype = db.Column(db.String(20), nullable=False, default='guest')
 
-    def __init__(self,name,email,password):
+    def __init__(self,name,emailid,password_hash, usertype):
         self.name = name
-        self.emailid = email
-        self.password_hash = password
+        self.emailid = emailid
+        self.password_hash = password_hash
+        self.usertype = usertype
 
     def __repr__(self):
         return "<Name: {}, id: {}>".format(self.name, self.id)
@@ -96,8 +97,19 @@ class Order(db.Model):
         
 
 class Comment(db.Model):
+    """Comment Table"""
+    __tablename__='comments'
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))  
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))  
+    text = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relationships
+    user = db.relationship('User', backref='comments')
+    event = db.relationship('Event', backref='comments')
+
 
 # class User(db.Model, UserMixin):
 #     """User data table"""
