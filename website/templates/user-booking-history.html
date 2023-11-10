@@ -6,9 +6,10 @@
 {% block content %}
 <div class="container pt-4">
   <div class="p-4 rounded-pill text-center bg-cherry">
-    <span class="h3" style="color: white;">Your booked events</span>
+    <span class="h3" style="color: white;">Your booked orders</span>
     <div class="row m-3">
-      <div class ="col-sm">
+      {% for order in orders %}
+      <div class ="col-md-4">
         <div class="card mb-3" style="max-width: 540px;">
           <div class="card-header">
             <div class="row">
@@ -16,54 +17,27 @@
                 Order date: 21/9/23
               </div>
               <div class="col">
-                Order number: 123456789
+                Order number: {{order.confirmation_num}}
               </div>
             </div>
           </div>
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="static/img/telescope-example-img.jpeg" class="img-on-card mt-0 mb-3" alt="telescope-example-img">
+              <img src="{{'static/img/' + events[loop.index0].cover_image_path}}" class="img-on-card mt-0 mb-3" alt="telescope-example-img">
             </div>
             <div class="col-md-8 text-left no-left-pad">
               <div class="card-body">
-                <h5 class="card-title">QUT Astrophysics Club - Monthly Stargazing Night (January)</h5>
-                <h6 class="card-subtitle">8 Jan 2023 6:30pm</h6>
-                <h6 class="card-text">Kangaroo Point Cliffs</h6>
-                <p class="card-text">29 River Terrace, Kangaroo Point QLD 4169</p>
+                <h5 class="card-title">{{events[loop.index0].title}}</h5>
+                <h6 class="card-subtitle">{{events[loop.index0].start_time}}</h6>
+
+                <p class="card-text">{{events[loop.index0].location}}</p>
                 <p class="card-text"><small class="text-body-secondary">Tags: physics, social, all ages</small></p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class ="col-sm">
-        <div class="card mb-3" style="max-width: 540px;">
-          <div class="card-header">
-            <div class="row">
-              <div class="col">
-                Order date: 21/9/23
-              </div>
-              <div class="col">
-                Order number: 123456789
-              </div>
-            </div>
-          </div>
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img src="static/img/telescope-example-img.jpeg" class="img-on-card mt-0 mb-3" alt="telescope-example-img">
-            </div>
-            <div class="col-md-8 text-left no-left-pad">
-              <div class="card-body">
-                <h5 class="card-title">QUT Astrophysics Club - Monthly Stargazing Night (January)</h5>
-                <h6 class="card-subtitle">8 Jan 2023 6:30pm</h6>
-                <h6 class="card-text">Kangaroo Point Cliffs</h6>
-                <p class="card-text">29 River Terrace, Kangaroo Point QLD 4169</p>
-                <p class="card-text"><small class="text-body-secondary">Tags: physics, social, all ages</small></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </div>

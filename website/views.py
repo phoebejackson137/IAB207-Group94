@@ -43,7 +43,20 @@ def create_event():
 @main_bp.route('/view-booked-events')
 def see_bookings():
     """Event Creation Page"""
-    return render_template('user-booking-history.html')
+    events = []
+    orders = []
+
+    for order in db.session.query(Order).filter_by(user_id=1):
+        print("ORDER CONFIRMATION NUM-------------" + str(order.confirmation_num))
+        orders.append(order)
+        event = db.session.query(Event).filter_by(id=order.event_id).first()
+        events.append(event)
+  
+    #for order in orders:
+    #    events.append(db.session.scalar(db.select(Event).where(Event.id==order.event_id)))
+    #    print("events:" + str(order.confirmation_num))
+    
+    return render_template('user-booking-history.html',orders=orders, events=events)
 
 @main_bp.route('/search')
 def search():
