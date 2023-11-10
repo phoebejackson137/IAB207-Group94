@@ -28,14 +28,11 @@ def view_event():
         order = Order(form.num_tickets.data, total_price, event_id, user_id)
         db.session.add(order)
         db.session.commit()
-        print("ORDER MADE! -------------------")
-        flash('Successfully created order', 'success')
         return redirect(url_for('main.see_bookings'))
     elif request.method == 'POST' and not form.validate():
         for error in form.errors:
             print("error: "+error)
-        flash('ERROR')
-        print('error!!!!!------------------------------')
+        flash('SYSTEM ERROR: Try again later')
     return render_template('event-detail-view.html', event=event, form=form)
 
 @main_bp.route('/create-event')
