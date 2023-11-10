@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import (
     FormField, SelectField, IntegerField, DecimalField,TextAreaField,
     SubmitField, StringField, PasswordField, DateTimeField, FileField)
-from wtforms.validators import InputRequired, Email, EqualTo
+from wtforms.validators import InputRequired, Email, EqualTo, NumberRange
 
 class TelephoneForm(FlaskForm):
     """Directly from the Flask WTForms documentation - recommended to store phone numbers"""
@@ -25,7 +25,7 @@ class EventForm(FlaskForm):
 
 class OrderForm(FlaskForm):
     """Order tickets to an event"""
-    num_tickets = IntegerField('Number of tickets', validators=[InputRequired()])
+    num_tickets = IntegerField('Number of tickets', validators=[InputRequired(), NumberRange(min=0, message='Must enter a number greater than 0')])
     #submit = SubmitField("Submit")
 
 class LoginForm(FlaskForm):
