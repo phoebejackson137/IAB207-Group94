@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% import "bootstrap/form.html" as wtf %}
+
+{% block content %}
+
+<div class="page-header">
+    <h4>Leave a Comment</h4>
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  {% for message in messages %}
+      <div class="alert alert-success">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+
+<!-- Comment Form rendering using bootstrap -->
+<div class="col-md-6 offset-md-3">
+    {{ wtf.render_form(form, button_map={'submit': 'btn btn-primary'}) }}
+</div>
+
+{% endblock %}
