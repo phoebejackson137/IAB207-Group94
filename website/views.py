@@ -15,6 +15,7 @@ main_bp = Blueprint('main', __name__)
 def index(active_tab):
     """Landing Page"""
     form=SearchEventsForm()
+    search_form=SearchEventsForm()
     active = active_tab
     events= [] 
     if active == "All": 
@@ -22,10 +23,10 @@ def index(active_tab):
     else:
         for event in db.session.query(Event).filter_by(tag1=active):
             events.append(event)
-    return render_template('index.html',form=form, events=events, active=active)
+    return render_template('index.html',form=form, events=events, active=active,search_form=search_form)
 
 
-@main_bp.route('/event-detail-view', methods=['GET', 'POST'])
+@main_bp.route('/unauth-event-detail-view', methods=['GET', 'POST'])
 def view_event():
     """Event Detail View"""
     event_id = request.args.get('target_event')
@@ -33,11 +34,6 @@ def view_event():
     comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.timestamp.desc()).all()
    
     return render_template('event-detail-view.html', event=event, form=None,comments=comments)
-
-@main_bp.route('/create-event')
-def create_event():
-    """Event Creation Page"""
-    return render_template('event-update-or-create.html')
 
 @main_bp.route('/view-booked-events')
 def see_bookings():

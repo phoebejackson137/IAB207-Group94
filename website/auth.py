@@ -1,9 +1,11 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash,check_password_hash
 from .models import User, Comment, Event, Order
-from .forms import LoginForm, RegisterForm, CommentForm, OrderForm
+from .forms import LoginForm, RegisterForm, CommentForm, OrderForm, EventForm
 from flask_login import login_user, login_required,logout_user, current_user
 from . import db
+from datetime import datetime
+
 #asdf
 # Create a blueprint - make sure all BPs have unique names
 bp = Blueprint('auth', __name__)
@@ -79,6 +81,7 @@ def comment():
 @bp.route('/event-detail-view', methods=['GET', 'POST'])
 def auth_view_event():
     """Event Detail View"""
+    print("------------------------ AUTH _-------------------")
     form = OrderForm()
     event_id = request.args.get('target_event')
     event = db.session.scalar(db.select(Event).where(Event.id==event_id))
@@ -97,6 +100,28 @@ def auth_view_event():
         flash('SYSTEM ERROR: Try again later')
     return render_template('event-detail-view.html', event=event, form=form,comments=comments)
 
+@bp.route('/create-event', methods=['GET', 'POST'])
+def create_event():
+    """Event Creation Page"""
+    form = EventForm()
+    if request.method == 'POST' and form.validate():
+       event = Event(form.title.data,
+                     form.tag1.data,
+                     form.description.data,
+                     form.location.data,
+                     form.start_time.data,
+                     "arthritis.jpg",
+                     form.num_tix.data,
+                     form.price_per.data)
+       db.session.add(event)
+       db.session.commit()
+       return redirect(url_for('main.index'))
+    elif request.method == 'POST' and not form.validate():
+        for error in form.errors:
+            print("error: "+error)
+        flash('SYSTEM ERROR: Try again later')
+
+    return render_template('event-update-or-create.html', form=form)
 
 @bp.route('/dashboard')
 @login_required

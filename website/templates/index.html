@@ -1,16 +1,14 @@
 <!doctype html>
 {% extends 'base.html' %}
 {% import "bootstrap/form.html" as wtf %}
+{% from 'bootstrap5/form.html' import render_form,render_field%}
 
 {% block content %}
 <!-------- START: Pill-shaped search bar -------->
 <div class="p-4 rounded-pill text-center bg-white m-0">
-  <div class="row mx-2">
-    <form class="form-inline d-flex flex-nowrap" action="{{url_for('main.search')}}" >
-      <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
-      <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
-      <button type="submit" class="flex-shrink-1 btn btn-primary my-1">Submit</button>
-    </form>
+  <div class="d-flex mx-2">
+    <div class="p-2 flex-grow-1 align-self-center">{{render_field(search_form.search_phrase)}}</div>
+    <div class="p-2 align-self-center">{{render_field(search_form.submit)}}</div>
   </div>
 </div>
 <!-------- END: Pill-shaped search bar -------->
@@ -102,7 +100,11 @@
       <div class="card-body">
         <h5 class="card-title">{{event.title}}</h5>
         <p class="card-text">{{event.description}}</p>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.auth_view_event', target_event=event.id) }}" class="btn btn-primary cherry">See details</a>
+        {% else %}
         <a href="{{ url_for('main.view_event', target_event=event.id) }}" class="btn btn-primary cherry">See details</a>
+        {% endif %}
       </div>
     </div>
   </div>

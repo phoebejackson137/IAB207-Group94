@@ -4,7 +4,7 @@ Flask forms
 from flask_wtf import FlaskForm
 from wtforms.fields import (
     FormField, SelectField, IntegerField, DecimalField,TextAreaField,
-    SubmitField, StringField, PasswordField, DateTimeField, FileField)
+    SubmitField, StringField, PasswordField, DateField, FileField)
 from wtforms.validators import InputRequired, Email, EqualTo, NumberRange
 
 class TelephoneForm(FlaskForm):
@@ -15,13 +15,15 @@ class TelephoneForm(FlaskForm):
 
 class EventForm(FlaskForm):
     """Create new event"""
-    name = StringField('Country', validators=[InputRequired()])
+    title = StringField('Country', validators=[InputRequired()])
+    tag1 = SelectField('Tag', choices=['social', 'public talk', 'workshop', 'trivia', 'competition'])
     description = TextAreaField('Description', validators = [InputRequired()])
-    image = FileField('Cover Image', validators=[InputRequired()])
-    start_time = DateTimeField('Start time', validators=[InputRequired()])
-    end_time = DateTimeField('End time', validators=[InputRequired()])
-    event_status = SelectField('Status', choices=['Open', 'Inactive', 'Sold Out', 'Cancelled'])
-    submit = SubmitField("Create")
+    location = StringField('Location')
+    start_time = DateField('Start time', validators=[InputRequired()])
+    image = FileField('Upload file')
+    num_tix = IntegerField('Number of Tickets Available')
+    price_per = DecimalField('Price per ticket')
+    submit = SubmitField("Post")
 
 class OrderForm(FlaskForm):
     """Order tickets to an event"""
@@ -53,4 +55,4 @@ class CommentForm(FlaskForm):
 class SearchEventsForm(FlaskForm):
     """ Search field """
     search_phrase = StringField('enter keywords', validators=[InputRequired()])
-    location = StringField('enter location', validators=[InputRequired()])
+    submit = SubmitField('Search')
