@@ -12,12 +12,13 @@ if __name__ == '__main__':
     ctx.push()
     db.drop_all()
     db.create_all()
+    u1=User("Phoebe","blach@gmail.com","password")
     e1=Event("QUT Astronomy Club - Monthly Stargazing Night (December)",
              "Join us for an unforgettable evening of celestial wonder at the QUT Astronomy Club's monthly Stargazing Night, taking place this December. Immerse yourself in the magic of the night sky as we explore the cosmos from the heart of the city.", 
              "QUT Gardens Point Campus, Brisbane CBD",
              datetime(2023,12,23,18,30),
              "telescope-example-img.jpeg",
-             100, 
+             100,
              5.50)
     e2=Event("QUT Women in Maths Society - Careers Panel",
              "Where can your Mathematics degree take you? Come along to WiM's annual career panel to meet professionals from a range of mathematical industries and gain valuable exposure to what post-university life could have in store for you.", 
@@ -93,6 +94,7 @@ if __name__ == '__main__':
               75,
               22.50)
     
+    db.session.add(u1)
     db.session.add(e1)
     db.session.add(e2)
     db.session.add(e3)

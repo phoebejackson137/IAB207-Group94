@@ -1,6 +1,7 @@
 <!doctype html>
 {% extends 'base.html' %}
 {% import "bootstrap/form.html" as wtf %}
+{% from 'bootstrap5/form.html' import render_form, render_field %}
 
 {% block content %}
 <div class="container pt-4 align-items-center">
@@ -45,11 +46,11 @@
         
         <!-- DESCRIPTION -->
         <div class="row mx-5">
-          <div class="col align-self-center">{{event.description}}</div>
+          <div class="col align-self-center">{{event.long_description}}</div>
         </div>
 
         <div class="d-flex align-items-center justify-content-between mx-4 py-4">
-          <span class="h5">Tickets: $5 each</span>
+          <span class="h5">Tickets: ${{event.price_per_ticket}} each</span>
           <button type="button" class="btn btn-cherry btn-sm rounded-pill">
             <span> comments</span>
             <span class="bi bi-chat-dots-fill"></span>
@@ -74,11 +75,19 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Tickets are </p>
+          <p>Tickets are ${{event.price_per_ticket}} each. There are {{event.total_num_tickets - event.num_tickets_sold}} tickets left. How many would you like to purchase?</p>
+          <form id="order_tickets" method="post">
+            <form method=post>
+              <dl>
+                {{ render_field(form.csrf_token) }} 
+                {{ render_field(form.num_tickets) }}
+              </dl>
+            </form>
+        </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary greyed rounded-pill px-4 py-0" data-bs-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary cherry rounded-pill px-4 py-0" value="Buy Tickets" form="order_tickets"/>
         </div>
       </div>
     </div>

@@ -34,11 +34,11 @@
     border-width: 3px;
 }
 .btn-primary.cherry:hover{
-    background-color:#FF6663;
+    background-color:#af302e;
     border-color:#af302e;
 }
 .btn-primary.cherry:active{
-    background-color:#FF6663;
+    background-color:#982624;
     border-color:#982624;
     box-shadow: none;
 }
@@ -47,6 +47,28 @@
     background-color:#982624;
     border-color:#982624;
     box-shadow: none;
+}
+
+.btn-secondary.greyed{
+  background-color:#757575;
+  border-color: #757575;
+  font-weight: bold;
+  border-radius: 10px;
+  border-width: 3px;
+}
+.btn-secondary.greyed:hover{
+  background-color:#5c5c5c;
+  border-color:#5c5c5c;
+}
+.btn-secondary.greyed:active{
+  background-color:#323232;
+  border-color:#323232;
+  box-shadow: none;
+}
+.btn-secondary.greyed:active:focus {
+  background-color:#323232;
+  border-color:#323232;
+  box-shadow: none;
 }
 
 .form-control {
