@@ -6,6 +6,8 @@ from wtforms.fields import (
     FormField, SelectField, IntegerField, DecimalField,TextAreaField,
     SubmitField, StringField, PasswordField, DateField, FileField)
 from wtforms.validators import InputRequired, Email, EqualTo, NumberRange
+from flask_wtf.file import FileRequired, FileField, FileAllowed
+from .user_forms import ALLOWED_FILE
 
 class TelephoneForm(FlaskForm):
     """Directly from the Flask WTForms documentation - recommended to store phone numbers"""
