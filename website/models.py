@@ -42,7 +42,7 @@ class Event(db.Model):
     tag2 = db.Column(db.String(250), nullable=True)
     tag3 = db.Column(db.String(250), nullable=True)
 
-    orders = db.relationship('User', backref='event')
+    orders = db.relationship('Order', backref='event')
 
     def __init__(self,title,tag1,description,location,start_time, cover_img_path, total_num_tickets,
                  price_per_ticket=0.00, num_tickets_sold=0, status='Open',long_description=""):

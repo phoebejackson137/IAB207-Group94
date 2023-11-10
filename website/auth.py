@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash,check_password_hash
-from .models import User, Comment, Event
-from .forms import LoginForm, RegisterForm, CommentForm
+from .models import User, Comment, Event, Order
+from .forms import LoginForm, RegisterForm, CommentForm, OrderForm
 from flask_login import login_user, login_required,logout_user, current_user
 from . import db
 #asdf
@@ -75,6 +75,27 @@ def comment():
         return redirect(url_for('main.view_event', target_event=event.id))  # Redirect to the event detail page
     
     return render_template('comment.html', form=form)  # Render the comment form
+
+@bp.route('/event-detail-view', methods=['GET', 'POST'])
+def auth_view_event():
+    """Event Detail View"""
+    form = OrderForm()
+    event_id = request.args.get('target_event')
+    event = db.session.scalar(db.select(Event).where(Event.id==event_id))
+    comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.timestamp.desc()).all()
+
+    if request.method == 'POST' and form.validate():
+        user_id = 1
+        total_price = 5.50
+        order = Order(form.num_tickets.data, total_price, event_id, user_id)
+        db.session.add(order)
+        db.session.commit()
+        return redirect(url_for('main.see_bookings'))
+    elif request.method == 'POST' and not form.validate():
+        for error in form.errors:
+            print("error: "+error)
+        flash('SYSTEM ERROR: Try again later')
+    return render_template('event-detail-view.html', event=event, form=form,comments=comments)
 
 
 @bp.route('/dashboard')

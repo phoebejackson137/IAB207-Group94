@@ -74,7 +74,10 @@
           <h5 class="modal-title" id="exampleModalLabel">Buy tickets for {{event.title}}?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
         <div class="modal-body">
+        {% if form != None %}
+        
           <p>Tickets are ${{event.price_per_ticket}} each. There are {{event.total_num_tickets - event.num_tickets_sold}} tickets left. How many would you like to purchase?</p>
           <form id="order_tickets" method="post">
             <form method=post>
@@ -83,8 +86,14 @@
                 {{ render_field(form.num_tickets) }}
               </dl>
             </form>
-        </form>
+          </form>
+        {% else %}
+        
+          <p>Please log in!</p>
+          
+        {% endif %}
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary greyed rounded-pill px-4 py-0" data-bs-dismiss="modal">Close</button>
           <input type="submit" class="btn btn-primary cherry rounded-pill px-4 py-0" value="Buy Tickets" form="order_tickets"/>
