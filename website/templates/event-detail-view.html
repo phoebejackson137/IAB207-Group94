@@ -3,87 +3,84 @@
 {% import "bootstrap/form.html" as wtf %}
 
 {% block content %}
-<div class="container pt-4">
-  <div class="row align-items-center">
+<div class="container pt-4 align-items-center">
+  <!-- actual event container -->
+  <div class="align-self-center"> 
+    <div class="p-0 rounded-pill-both text-center bg-white">
+      <!-- Cover image container -->
+      <div class="row pb-2">
+        <div class="col position-relative">
+          <div class="item">
 
-    <!-- go back button -->
-    <div class="col-2">
-      <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-cherry rounded-pill py-0">
-          <i class="bi bi-arrow-left"></i>
-        </button>
+            <!-- tags on top of cover image -->
+            <div class="hstack gap-3 tag-group m-3">
+              <span class="tag">physics</span>
+              <span class="tag">social</span>
+              <span class="tag">all-ages</span>
+            </div>
+          
+            <!-- cover image -->
+            <img src="{{'static/img/' + event.cover_image_path}}"style="max-height: 350px; width: 100%; object-fit: cover;object-position:bottom;" class="img-fluid overflow-hidden rounded-pill-top mt-0 mb-3" alt="telescope-example-img">
+          </div>
+          </div>
       </div>
-    </div>
+      
+      <!-- Event details container -->
+      <div class="container">
 
-    <!-- actual event container -->
-    <div class="col-8 align-self-center"> 
-      <div class="p-0 rounded-pill-both text-center bg-white">
-        <!-- Cover image container -->
+        <!-- TITLE -->
+        <p class="h2">{{event.title}}</p>
+
+        <!-- DATE & TIME AND LOCATION -->
         <div class="row pb-2">
-          <div class="col position-relative">
-            <div class="item">
-
-              <!-- tags on top of cover image -->
-              <div class="hstack gap-3 tag-group m-3">
-                <span class="tag">physics</span>
-                <span class="tag">social</span>
-                <span class="tag">all-ages</span>
-              </div>
-            
-              <!-- cover image -->
-              <img src="{{'static/img/' + event.cover_image_path}}"style="max-height: 350px; width: 100%; object-fit: cover;object-position:bottom;" class="img-fluid overflow-hidden rounded-pill-top mt-0 mb-3" alt="telescope-example-img">
-            </div>
-            </div>
+          <!-- date & time-->
+          <div class="col align-self-center">
+            <p class="h6">{{event.start_time}}</p>
+          </div>
+          <!-- location -->
+          <div class="col align-self-center">
+            <p class="h6">{{event.location}}</p>
+          </div>
         </div>
         
-        <!-- Event details container -->
-        <div class="container">
-
-          <!-- TITLE -->
-          <p class="h2">{{event.title}}</p>
-
-          <!-- DATE & TIME AND LOCATION -->
-          <div class="row pb-2">
-            <!-- date & time-->
-            <div class="col align-self-center">
-              <p class="h6">{{event.start_time}}</p>
-            </div>
-            <!-- location -->
-            <div class="col align-self-center">
-              <p class="h6">{{event.location}}</p>
-            </div>
-          </div>
-          
-          <!-- DESCRIPTION -->
-          <div class="row mx-5">
-            <div class="col align-self-center">{{event.description}}</div>
-          </div>
-
-          <div class="d-flex align-items-center justify-content-between mx-4 py-4">
-            <span class="h5">Tickets: $5 each</span>
-            <button type="button" class="btn btn-cherry btn-sm rounded-pill">
-              <span> comments</span>
-              <span class="bi bi-chat-dots-fill"></span>
-            </button>
-          </div>
+        <!-- DESCRIPTION -->
+        <div class="row mx-5">
+          <div class="col align-self-center">{{event.description}}</div>
         </div>
-      </div>
-    </div>
 
-    <!-- go forward button -->
-    <div class="col-2">
-      <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-cherry rounded-pill py-0">
-          <i class="bi bi-arrow-right"></i>
-        </button>
+        <div class="d-flex align-items-center justify-content-between mx-4 py-4">
+          <span class="h5">Tickets: $5 each</span>
+          <button type="button" class="btn btn-cherry btn-sm rounded-pill">
+            <span> comments</span>
+            <span class="bi bi-chat-dots-fill"></span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
   <div class= "row text-center py-3">
     <div class="col align-self-center">
-      <button type="button" class="btn btn-cherry rounded-pill px-4 py-0">
+      <button type="button" class="btn btn-cherry rounded-pill px-4 py-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
         <span>Buy Tickets</span>
       </button>
+    </div>
+  </div>
+   <!-- MODAL POPUP (BUY TICKETS MENU) -->
+   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Buy tickets for {{event.title}}?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tickets are </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
