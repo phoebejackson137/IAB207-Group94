@@ -7,6 +7,7 @@ from wtforms.fields import (
     SubmitField, StringField, PasswordField, DateTimeField, FileField)
 from wtforms.validators import InputRequired, Email, EqualTo
 
+
 class TelephoneForm(FlaskForm):
     """Directly from the Flask WTForms documentation - recommended to store phone numbers"""
     country_code = IntegerField('Country Code', validators=[InputRequired()])
@@ -29,23 +30,23 @@ class OrderForm(FlaskForm):
     price_per_ticket = DecimalField('Price per ticket')
 
 class LoginForm(FlaskForm):
-    """Login for existing users"""
-    user_name=StringField("User Name", validators=[InputRequired('Enter user name')])
-    password=PasswordField("Password", validators=[InputRequired('Enter user password')])
-    submit = SubmitField("Login")
+  username = StringField('User Name', validators=[InputRequired()])
+  password = PasswordField('Password', validators=[InputRequired()])
+  submit = SubmitField('Login')
+
 
 class RegisterForm(FlaskForm):
-    """User registration"""
-    user_name=StringField("User Name", validators=[InputRequired()])
-    user_email = StringField("Email Address", validators=[Email("Please enter a valid email")])
-    mobile_number = FormField(TelephoneForm)
-    #linking two fields - password should be equal to data entered in confirm
-    password=PasswordField("Password", validators=[InputRequired(),
-                  EqualTo('confirm', message="Passwords should match")])
-    confirm = PasswordField("Confirm Password")
+    username = StringField('User Name', validators=[InputRequired()])
+    email = StringField('Email ID', validators=[InputRequired(),Email() ])
+    #password field
+    password = PasswordField('Password', validators=[InputRequired()])
+  #validator to check if the user entry is equal to password
+    confirm = PasswordField('Confirm Password', 
+          validators=[EqualTo('password', message='Re-enter same as Password')])
 
-    #submit button
-    submit = SubmitField("Register")
+    usertype = SelectField('User Type', choices=[('guest', 'Guest'),('admin', 'Administrator')])
+    submit = SubmitField('Register')
+
 
 class CommentForm(FlaskForm):
     """ User comments on events """

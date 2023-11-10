@@ -5,6 +5,7 @@ from website import db, create_app
 from datetime import datetime
 from website.models import User, Event, Order
 
+
 if __name__ == '__main__':
     app = create_app()
     ctx = app.app_context()

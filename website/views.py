@@ -43,3 +43,4 @@ eventbp = Blueprint('event', __name__, url_prefix='/event')
 def show(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
     return render_template('event-detail-view.html', event=event)
+
