@@ -2,8 +2,8 @@
 Determines what content is in the viewport
 """
 from flask import Blueprint, render_template, request, redirect, url_for
-from .forms import SearchEventsForm
-from .models import Event
+from .forms import SearchEventsForm, OrderForm
+from .models import Event, Order
 from . import db
 from flask_login import login_required, current_user
 from datetime import datetime
