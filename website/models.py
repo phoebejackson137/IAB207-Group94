@@ -19,25 +19,6 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return "<Name: {}, id: {}>".format(self.name, self.id)
 
-# class User(db.Model, UserMixin):
-#     """User data table"""
-#     __tablename__='users'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
-#     emailid = db.Column(db.String(100), index=True, nullable=False)
-#     username = db.Column(db.String(80), unique=True, nullable=False)
-#     password_hash = db.Column(db.String(255), nullable=False)#should be 128 in length to store hash
-#     def set_password(self, password):
-#         self.password_hash = generate_password_hash(password)
-
-#     def check_password(self, password):
-#         return check_password_hash(self.password_hash, password)
-#     usertype = db.Column(db.String(20), nullable=False, default='guest')
-    
-#     orders = db.relationship('Order', backref='user')
-
-#     def __repr__(self):
-#         return "<Name: {}, id: {}>".format(self.name, self.id)
 
 class Event(db.Model):
     """Event table"""
@@ -70,8 +51,18 @@ class Order(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+
+
 class Comment(db.Model):
-    """Comment Table"""
-    __tablename__='comments'
+    __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))  
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))  
+    text = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relationships
+    user = db.relationship('User', backref='comments')
+    event = db.relationship('Event', backref='comments')
+
 

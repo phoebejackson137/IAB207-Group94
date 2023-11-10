@@ -62,8 +62,7 @@
           <div class="d-flex align-items-center justify-content-between mx-4 py-4">
             <span class="h5">Tickets: $5 each</span>
             <button type="button" class="btn btn-cherry btn-sm rounded-pill">
-              <span> comments</span>
-              <span class="bi bi-chat-dots-fill"></span>
+              <a class="bi bi-chat-dots-fill" href="{{ url_for('auth.comment', event_id=event.id )}}">comments</a>    
             </button>
           </div>
         </div>
@@ -86,6 +85,27 @@
       </button>
     </div>
   </div>
+
+      <!-- Comments Section -->
+      <div class="row mx-5 mt-4">
+        <div class="col">
+          <h5>Comments</h5>
+          <!-- Iterate over each comment -->
+          {% for comment in comments %}
+            <div class="card mb-2">
+              <div class="card-body">
+                <h6 class="card-title">{{ comment.user.username }}</h6> <!-- Display commenter's username -->
+                <p class="card-text">{{ comment.text }}</p> <!-- Display comment text -->
+                <p class="card-text"><small class="text-muted">{{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}</small></p> <!-- Display timestamp -->
+              </div>
+            </div>
+          {% else %}
+            <p>No comments yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- End of Comments Section -->
+    </div>
 </div>
     <!---------------------------- END: MAIN ---------------------------------->
     {% endblock %}

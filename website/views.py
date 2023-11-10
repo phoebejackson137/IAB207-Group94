@@ -3,9 +3,10 @@ Determines what content is in the viewport
 """
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .forms import SearchEventsForm
-from .models import Event, User
+from .models import Event, User, Comment
 from . import db
 from flask_login import login_required, current_user
+from datetime import datetime
 
 main_bp = Blueprint('main', __name__)
 
@@ -21,7 +22,8 @@ def view_event():
     """Event Detail View"""
     event_id = request.args.get('target_event')
     event = db.session.scalar(db.select(Event).where(Event.id==event_id))
-    return render_template('event-detail-view.html', event=event)
+    comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.timestamp.desc()).all()
+    return render_template('event-detail-view.html', event=event, comments=comments)
 
 @main_bp.route('/create-event')
 def create_event():

@@ -1,8 +1,8 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash,check_password_hash
-from .models import User
-from .forms import LoginForm, RegisterForm
-from flask_login import login_user, login_required,logout_user
+from .models import User, Comment, Event
+from .forms import LoginForm, RegisterForm, CommentForm
+from flask_login import login_user, login_required,logout_user, current_user
 from . import db
 #asdf
 # Create a blueprint - make sure all BPs have unique names
@@ -56,6 +56,26 @@ def login():
       flash(error)
     #it comes here when it is a get method
   return render_template('forms.html', form=form, heading='Login')
+
+
+
+@bp.route('/comment', methods=['GET', 'POST'])
+@login_required
+def comment():
+    event_id = request.args.get("event_id")
+    event = db.session.scalar(db.select(Event).where(Event.id==event_id))
+    print("HERE___________" + event_id)
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(user_id=current_user.id, event_id=event_id, text=form.text.data)
+        db.session.add(comment)
+        db.session.commit()
+        comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.timestamp.desc()).all()
+        flash('Your comment has been posted.', 'success')
+        return render_template('event-detail-view.html', event=event, comments=comments)  # Redirect to the event detail page
+
+    return render_template('comment.html', form=form)  # Render the comment form
+
 
 @bp.route('/dashboard')
 @login_required
