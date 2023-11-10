@@ -51,7 +51,7 @@
 
         <div class="d-flex align-items-center justify-content-between mx-4 py-4">
           <span class="h5">Tickets: ${{event.price_per_ticket}} each</span>
-          <a class="btn btn-cherry btn-sm rounded-pill" href="{{ url_for('auth.comment') }}">
+          <a class="btn btn-cherry btn-sm rounded-pill" href="{{ url_for('auth.comment', event_id=event.id )}}">
             <span> write a comment</span>
             <span class="bi bi-chat-dots-fill"></span>
           </a>

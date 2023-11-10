@@ -70,10 +70,10 @@ def comment():
         comment = Comment(user_id=current_user.id, event_id=event_id, text=form.text.data)
         db.session.add(comment)
         db.session.commit()
-        comments = Comment.query.filter_by(event_id=event_id).order_by(Comment.timestamp.desc()).all()
         flash('Your comment has been posted.', 'success')
-        return render_template('event-detail-view.html', event=event, comments=comments)  # Redirect to the event detail page
 
+        return redirect(url_for('main.view_event', target_event=event.id))  # Redirect to the event detail page
+    
     return render_template('comment.html', form=form)  # Render the comment form
 
 
