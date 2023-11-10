@@ -24,26 +24,6 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return "<Name: {}, id: {}>".format(self.name, self.id)
 
-# class User(db.Model, UserMixin):
-#     """User data table"""
-#     __tablename__='users'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
-#     emailid = db.Column(db.String(100), index=True, nullable=False)
-#     username = db.Column(db.String(80), unique=True, nullable=False)
-#     password_hash = db.Column(db.String(255), nullable=False)#should be 128 in length to store hash
-#     def set_password(self, password):
-#         self.password_hash = generate_password_hash(password)
-
-#     def check_password(self, password):
-#         return check_password_hash(self.password_hash, password)
-#     usertype = db.Column(db.String(20), nullable=False, default='guest')
-    
-#     orders = db.relationship('Order', backref='user')
-
-#     def __repr__(self):
-#         return "<Name: {}, id: {}>".format(self.name, self.id)
-
 class Event(db.Model):
     """Event table"""
     __tablename__='events'
@@ -59,7 +39,7 @@ class Event(db.Model):
     status = db.Column(db.String(250), nullable=False,default='Open')
     long_description = db.Column(db.String(1000),nullable=False)
 
-    orders = db.relationship('Order', backref='event')
+    orders = db.relationship('User', backref='event')
 
     def __init__(self,title,description,location,start_time, cover_img_path, total_num_tickets,
                  price_per_ticket=0.00, num_tickets_sold=0, status='Open',long_description=""):
@@ -109,24 +89,3 @@ class Comment(db.Model):
     # Relationships
     user = db.relationship('User', backref='comments')
     event = db.relationship('Event', backref='comments')
-
-
-# class User(db.Model, UserMixin):
-#     """User data table"""
-#     __tablename__='users'
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
-#     emailid = db.Column(db.String(100), index=True, nullable=False)
-#     username = db.Column(db.String(80), unique=True, nullable=False)
-#     password_hash = db.Column(db.String(255), nullable=False)#should be 128 in length to store hash
-#     def set_password(self, password):
-#         self.password_hash = generate_password_hash(password)
-
-#     def check_password(self, password):
-#         return check_password_hash(self.password_hash, password)
-#     usertype = db.Column(db.String(20), nullable=False, default='guest')
-    
-#     orders = db.relationship('Order', backref='user')
-
-#     def __repr__(self):
-#         return "<Name: {}, id: {}>".format(self.name, self.id)
