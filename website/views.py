@@ -39,36 +39,6 @@ def view_event():
     return render_template('event-detail-view.html', event=event, form=None,comments=comments)
 
 
-
-@main_bp.route('/create-event', methods=['GET', 'POST'])
-@login_required
-def create_event():
-    form = EventForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        filename = check_file(form)
-        if filename:
-            new_event = Event(
-                title=form.name.data,
-                tag1="Your Tag1 Field",  # Update this based on your form
-                description=form.description.data,
-                location=form.location.data,
-                start_time=form.start_time.data,
-                cover_image_path=filename,
-                total_num_tickets=form.total_num_tickets.data,
-                price_per_ticket=form.price_per_ticket.data,
-                status=form.event_status.data,
-                long_description=form.description.data
-            )
-            db.session.add(new_event)
-            db.session.commit()
-            flash('Event created successfully!', 'success')
-            return redirect(url_for('some_route_name'))  # Redirect to a relevant route
-        else:
-            flash('There was an error with the file upload.', 'error')
-
-    return render_template('event-update-or-create.html', form=form)
-
-
 @main_bp.route('/view-booked-events')
 def see_bookings():
     """Event Creation Page"""
