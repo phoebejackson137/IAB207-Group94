@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
-
+{% import "bootstrap/form.html" as wtf %}
+{% from 'bootstrap5/form.html' import render_form,render_field%}
 {% block content %}
 <div class="container pt-4">
     <div class="p-5 rounded-pill text-center bg-cherry">
@@ -9,32 +9,32 @@
             
             <!-- Event Name -->
             <div class="form-group">
-                {{ wtf.form_field(form.name) }}
+                {{ render_field(form.name) }}
             </div>
 
             <!-- Event Description -->
             <div class="form-group">
-                {{ wtf.form_field(form.description) }}
+                {{ render_field(form.description) }}
             </div>
 
             <!-- Event Image -->
             <div class="form-group">
-                {{ wtf.form_field(form.image) }}
+                {{ render_field(form.image) }}
             </div>
 
             <!-- Start Time -->
             <div class="form-group">
-                {{ wtf.form_field(form.start_time) }}
+                {{ render_field(form.start_time) }}
             </div>
 
             <!-- End Time -->
             <div class="form-group">
-                {{ wtf.form_field(form.end_time) }}
+                {{ render_field(form.end_time) }}
             </div>
 
             <!-- Event Status -->
             <div class="form-group">
-                {{ wtf.form_field(form.event_status) }}
+                {{ render_field(form.event_status) }}
             </div>
 
             <!-- Submit Button -->
