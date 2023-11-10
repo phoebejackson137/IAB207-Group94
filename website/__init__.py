@@ -4,6 +4,7 @@ from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+
 db = SQLAlchemy()
 
 #create a function that creates a web application
@@ -38,10 +39,10 @@ def create_app():
 
     #importing views module here to avoid circular references
     # a commonly used practice.
-    from . import views
-    app.register_blueprint(views.main_bp)
+    from .views import main_bp
+    app.register_blueprint(main_bp)
 
-    from . import auth
-    app.register_blueprint(auth.auth_bp)
+    from .auth import bp
+    app.register_blueprint(bp)
     
     return app

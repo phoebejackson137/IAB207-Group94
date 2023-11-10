@@ -1,10 +1,11 @@
 """
 Determines what content is in the viewport
 """
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .forms import SearchEventsForm
-from .models import Event
+from .models import Event, User
 from . import db
+from flask_login import login_required, current_user
 
 main_bp = Blueprint('main', __name__)
 

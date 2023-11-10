@@ -1,14 +1,14 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash,check_password_hash
 from .models import User
-from .forms import LoginForm,RegisterForm
+from .forms import LoginForm, RegisterForm
 from flask_login import login_user, login_required,logout_user
 from . import db
 
 # Create a blueprint - make sure all BPs have unique names
-auth_bp = Blueprint('auth', __name__)
+bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/forms', methods=['GET', 'POST'])
+@bp.route('/register', methods=['GET', 'POST'])
 def register():  
   #create the form
     form = RegisterForm()
@@ -32,7 +32,7 @@ def register():
        
     return render_template('forms.html', form=form, heading='Register')
 
-@auth_bp.route('/forms', methods=['GET', 'POST'])
+@bp.route('/login', methods=['GET', 'POST'])
 def login():
   form = LoginForm()
   error=None
@@ -57,12 +57,12 @@ def login():
     #it comes here when it is a get method
   return render_template('forms.html', form=form, heading='Login')
 
-@auth_bp.route('/dashboard')
+@bp.route('/dashboard')
 @login_required
 def dashboard():
     return 'Welcome to your Dashboard!'
 
-@auth_bp.route('/logout')
+@bp.route('/logout')
 def logout():
   logout_user()
   return 'Successfully logged out user'
